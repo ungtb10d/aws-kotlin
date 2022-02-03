@@ -27,7 +27,7 @@ import aws.smithy.kotlin.runtime.util.putIfAbsent
 
 const val ServiceId: String = "STS"
 const val ServiceApiVersion: String = "2011-06-15"
-const val SdkVersion: String = "0.11.1-SNAPSHOT"
+const val SdkVersion: String = "0.11.2-SNAPSHOT"
 
 internal class DefaultStsClient(override val config: StsClient.Config) : StsClient {
     private val client: SdkHttpClient
