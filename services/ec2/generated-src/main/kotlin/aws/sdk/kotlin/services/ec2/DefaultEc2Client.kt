@@ -25,6 +25,8 @@ import aws.smithy.kotlin.runtime.http.operation.context
 import aws.smithy.kotlin.runtime.http.operation.roundTrip
 import aws.smithy.kotlin.runtime.http.sdkHttpClient
 import aws.smithy.kotlin.runtime.io.Closeable
+import aws.smithy.kotlin.runtime.io.use
+import aws.smithy.kotlin.runtime.tracing.DefaultTracer
 import aws.smithy.kotlin.runtime.util.putIfAbsent
 
 
@@ -34,6 +36,7 @@ public const val SdkVersion: String = "0.17.5-SNAPSHOT"
 
 internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Client {
     private val client: SdkHttpClient
+    private val rootTraceSpan = DefaultTracer(config.traceProbe, config.clientName).createRootSpan()
     init {
         val httpClientEngine = config.httpClientEngine ?: DefaultHttpEngine()
         client = sdkHttpClient(httpClientEngine, manageEngine = config.httpClientEngine == null)
@@ -70,7 +73,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -103,7 +110,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -136,7 +147,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -171,7 +186,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -204,7 +223,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -239,7 +262,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -280,7 +307,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -325,7 +356,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -358,7 +393,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -391,7 +430,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -424,7 +467,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -461,7 +508,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -504,7 +555,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -551,7 +606,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -586,7 +645,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -623,7 +686,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -660,7 +727,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -693,7 +764,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -728,7 +803,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -763,7 +842,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -796,7 +879,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -831,7 +918,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -864,7 +955,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -897,7 +992,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -934,7 +1033,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -971,7 +1074,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1010,7 +1117,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1043,7 +1154,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1076,7 +1191,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1121,7 +1240,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1156,7 +1279,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1189,7 +1316,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1230,7 +1361,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1273,7 +1408,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1310,7 +1449,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1343,7 +1486,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1378,7 +1525,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1414,7 +1565,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1449,7 +1604,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1482,7 +1641,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1515,7 +1678,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1550,7 +1717,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1585,7 +1756,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1620,7 +1795,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1653,7 +1832,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1686,7 +1869,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1725,7 +1912,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1768,7 +1959,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1807,7 +2002,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1840,7 +2039,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1873,7 +2076,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1906,7 +2113,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1939,7 +2150,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1976,7 +2191,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2009,7 +2228,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2048,7 +2271,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2088,7 +2315,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2121,7 +2352,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2158,7 +2393,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2197,7 +2436,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2234,7 +2477,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2275,7 +2522,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2321,7 +2572,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2356,7 +2611,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2391,7 +2650,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2426,7 +2689,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2461,7 +2728,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2496,7 +2767,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2535,7 +2810,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2572,7 +2851,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2611,7 +2894,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2644,7 +2931,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2677,7 +2968,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2710,7 +3005,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2749,7 +3048,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2784,7 +3087,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2823,7 +3130,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2858,7 +3169,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2893,7 +3208,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2928,7 +3247,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2963,7 +3286,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3000,7 +3327,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3033,7 +3364,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3068,7 +3403,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3109,7 +3448,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3146,7 +3489,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3189,7 +3536,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3224,7 +3575,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3269,7 +3624,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3316,7 +3675,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3351,7 +3714,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3384,7 +3751,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3421,7 +3792,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3466,7 +3841,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3499,7 +3878,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3534,7 +3917,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3571,7 +3958,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3608,7 +3999,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3647,7 +4042,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3686,7 +4085,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3727,7 +4130,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3762,7 +4169,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3799,7 +4210,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3834,7 +4249,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3869,7 +4288,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3902,7 +4325,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3935,7 +4362,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3968,7 +4399,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4001,7 +4436,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4034,7 +4473,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4071,7 +4514,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4112,7 +4559,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4151,7 +4602,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4184,7 +4639,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4219,7 +4678,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4260,7 +4723,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4299,7 +4766,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4342,7 +4813,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4377,7 +4852,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4412,7 +4891,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4447,7 +4930,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4480,7 +4967,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4513,7 +5004,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4546,7 +5041,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4579,7 +5078,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4612,7 +5115,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4657,7 +5164,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4690,7 +5201,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4723,7 +5238,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4758,7 +5277,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4791,7 +5314,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4826,7 +5353,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4863,7 +5394,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4898,7 +5433,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4931,7 +5470,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4964,7 +5507,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4997,7 +5544,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5030,7 +5581,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5063,7 +5618,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5096,7 +5655,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5129,7 +5692,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5162,7 +5729,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5195,7 +5766,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5228,7 +5803,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5261,7 +5840,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5294,7 +5877,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5327,7 +5914,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5360,7 +5951,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5393,7 +5988,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5426,7 +6025,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5459,7 +6062,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5492,7 +6099,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5525,7 +6136,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5558,7 +6173,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5595,7 +6214,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5634,7 +6257,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5667,7 +6294,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5700,7 +6331,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5733,7 +6368,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5768,7 +6407,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5803,7 +6446,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5836,7 +6483,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5869,7 +6520,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5904,7 +6559,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5937,7 +6596,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -5970,7 +6633,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6003,7 +6670,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6036,7 +6707,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6069,7 +6744,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6102,7 +6781,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6135,7 +6818,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6168,7 +6855,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6201,7 +6892,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6234,7 +6929,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6267,7 +6966,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6304,7 +7007,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6337,7 +7044,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6370,7 +7081,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6403,7 +7118,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6444,7 +7163,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6477,7 +7200,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6514,7 +7241,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6547,7 +7278,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6580,7 +7315,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6615,7 +7354,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6648,7 +7391,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6681,7 +7428,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6720,7 +7471,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6753,7 +7508,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6786,7 +7545,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6819,7 +7582,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6860,7 +7627,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6897,7 +7668,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6930,7 +7705,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -6967,7 +7746,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7002,7 +7785,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7037,7 +7824,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7072,7 +7863,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7105,7 +7900,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7138,7 +7937,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7171,7 +7974,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7206,7 +8013,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7239,7 +8050,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7272,7 +8087,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7305,7 +8124,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7338,7 +8161,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7371,7 +8198,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7404,7 +8235,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7439,7 +8274,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7474,7 +8313,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7509,7 +8352,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7542,7 +8389,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7575,7 +8426,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7608,7 +8463,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7641,7 +8500,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7674,7 +8537,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7707,7 +8574,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7744,7 +8615,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7779,7 +8654,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7814,7 +8693,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7847,7 +8730,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7880,7 +8767,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7913,7 +8804,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7948,7 +8843,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -7981,7 +8880,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8016,7 +8919,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8049,7 +8956,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8086,7 +8997,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8123,7 +9038,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8156,7 +9075,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8193,7 +9116,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8226,7 +9153,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8259,7 +9190,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8292,7 +9227,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8335,7 +9274,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8368,7 +9311,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8405,7 +9352,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8443,7 +9394,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8476,7 +9431,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8509,7 +9468,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8552,7 +9515,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8585,7 +9552,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8618,7 +9589,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8651,7 +9626,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8686,7 +9665,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8719,7 +9702,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8754,7 +9741,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8787,7 +9778,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8820,7 +9815,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8853,7 +9852,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8886,7 +9889,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8919,7 +9926,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8952,7 +9963,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -8985,7 +10000,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9018,7 +10037,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9053,7 +10076,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9086,7 +10113,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9119,7 +10150,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9154,7 +10189,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9187,7 +10226,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9220,7 +10263,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9253,7 +10300,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9286,7 +10337,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9319,7 +10374,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9352,7 +10411,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9385,7 +10448,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9418,7 +10485,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9453,7 +10524,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9490,7 +10565,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9523,7 +10602,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9560,7 +10643,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9593,7 +10680,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9630,7 +10721,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9671,7 +10766,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9708,7 +10807,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9747,7 +10850,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9784,7 +10891,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9823,7 +10934,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9858,7 +10973,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9891,7 +11010,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9924,7 +11047,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9961,7 +11088,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -9996,7 +11127,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10029,7 +11164,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10083,7 +11222,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10116,7 +11259,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10149,7 +11296,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10186,7 +11337,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10221,7 +11376,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10260,7 +11419,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10295,7 +11458,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10328,7 +11495,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10369,7 +11540,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10404,7 +11579,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10439,7 +11618,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10472,7 +11655,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10505,7 +11692,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10538,7 +11729,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10571,7 +11766,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10604,7 +11803,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10637,7 +11840,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10670,7 +11877,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10703,7 +11914,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10736,7 +11951,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10769,7 +11988,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10802,7 +12025,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10835,7 +12062,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10868,7 +12099,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10903,7 +12138,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10938,7 +12177,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -10981,7 +12224,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11018,7 +12265,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11055,7 +12306,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11088,7 +12343,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11123,7 +12382,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11158,7 +12421,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11191,7 +12458,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11224,7 +12495,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11257,7 +12532,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11290,7 +12569,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11325,7 +12608,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11358,7 +12645,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11391,7 +12682,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11424,7 +12719,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11459,7 +12758,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11494,7 +12797,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11529,7 +12836,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11562,7 +12873,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11595,7 +12910,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11632,7 +12951,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11667,7 +12990,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11706,7 +13033,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11741,7 +13072,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11774,7 +13109,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11809,7 +13148,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11842,7 +13185,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11875,7 +13222,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11908,7 +13259,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11941,7 +13296,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -11976,7 +13335,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12013,7 +13376,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12052,7 +13419,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12089,7 +13460,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12122,7 +13497,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12157,7 +13536,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12192,7 +13575,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12227,7 +13614,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12260,7 +13651,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12293,7 +13688,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12326,7 +13725,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12359,7 +13762,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12394,7 +13801,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12429,7 +13840,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12470,7 +13885,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12505,7 +13924,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12542,7 +13965,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12577,7 +14004,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12610,7 +14041,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12643,7 +14078,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12676,7 +14115,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12709,7 +14152,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12742,7 +14189,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12777,7 +14228,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12814,7 +14269,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12847,7 +14306,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12880,7 +14343,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12913,7 +14380,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12948,7 +14419,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -12981,7 +14456,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13014,7 +14493,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13047,7 +14530,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13080,7 +14567,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13119,7 +14610,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13154,7 +14649,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13189,7 +14688,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13224,7 +14727,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13259,7 +14766,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13296,7 +14807,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13329,7 +14844,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13364,7 +14883,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13401,7 +14924,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13438,7 +14965,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13471,7 +15002,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13504,7 +15039,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13537,7 +15076,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13570,7 +15113,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13605,7 +15152,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13638,7 +15189,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13671,7 +15226,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13704,7 +15263,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13737,7 +15300,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13778,7 +15345,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13811,7 +15382,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13844,7 +15419,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13881,7 +15460,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13914,7 +15497,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13947,7 +15534,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -13980,7 +15571,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14013,7 +15608,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14046,7 +15645,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14079,7 +15682,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14112,7 +15719,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14145,7 +15756,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14178,7 +15793,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14211,7 +15830,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14246,7 +15869,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14281,7 +15908,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14320,7 +15951,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14355,7 +15990,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14390,7 +16029,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14429,7 +16072,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14462,7 +16109,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14495,7 +16146,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14528,7 +16183,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14563,7 +16222,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14596,7 +16259,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14631,7 +16298,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14664,7 +16335,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14701,7 +16376,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14740,7 +16419,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14783,7 +16466,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14816,7 +16503,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14851,7 +16542,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14890,7 +16585,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14931,7 +16630,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -14968,7 +16671,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15005,7 +16712,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15038,7 +16749,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15073,7 +16788,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15106,7 +16825,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15147,7 +16870,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15180,7 +16907,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15213,7 +16944,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15254,7 +16989,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15287,7 +17026,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15322,7 +17065,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15357,7 +17104,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15390,7 +17141,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15423,7 +17178,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15460,7 +17219,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15493,7 +17256,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15526,7 +17293,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15563,7 +17334,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15596,7 +17371,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15633,7 +17412,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15666,7 +17449,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15709,7 +17496,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15750,7 +17541,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15785,7 +17580,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15820,7 +17619,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15853,7 +17656,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15886,7 +17693,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15919,7 +17730,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15952,7 +17767,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -15993,7 +17812,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16030,7 +17853,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16063,7 +17890,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16096,7 +17927,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16129,7 +17964,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16164,7 +18003,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16197,7 +18040,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16232,7 +18079,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16272,7 +18123,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16309,7 +18164,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16362,7 +18221,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16397,7 +18260,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16430,7 +18297,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16463,7 +18334,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16498,7 +18373,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16533,7 +18412,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16568,7 +18451,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16605,7 +18492,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16640,7 +18531,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16675,7 +18570,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16708,7 +18607,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16747,7 +18650,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16784,7 +18691,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16821,7 +18732,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16875,7 +18790,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16910,7 +18829,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16945,7 +18868,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -16982,7 +18909,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17015,7 +18946,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17048,7 +18983,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17083,7 +19022,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17116,7 +19059,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17149,7 +19096,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17194,7 +19145,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17231,7 +19186,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17264,7 +19223,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17299,7 +19262,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17334,7 +19301,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17367,7 +19338,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17404,7 +19379,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17439,7 +19418,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17472,7 +19455,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17507,7 +19494,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17554,7 +19545,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17593,7 +19588,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17626,7 +19625,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17661,7 +19664,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17694,7 +19701,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17727,7 +19738,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17762,7 +19777,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17795,7 +19814,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17830,7 +19853,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17865,7 +19892,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17898,7 +19929,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17931,7 +19966,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17964,7 +20003,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -17999,7 +20042,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18032,7 +20079,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18073,7 +20124,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18116,7 +20171,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18170,7 +20229,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18207,7 +20270,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18240,7 +20307,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18273,7 +20344,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18306,7 +20381,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18345,7 +20424,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18388,7 +20471,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18421,7 +20508,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18454,7 +20545,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18491,7 +20586,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18536,7 +20635,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18569,7 +20672,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18626,7 +20733,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18659,7 +20770,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18692,7 +20807,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18725,7 +20844,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18758,7 +20881,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18791,7 +20918,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -18828,7 +20959,11 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     override fun close() {

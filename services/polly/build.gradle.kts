@@ -21,6 +21,7 @@ kotlin {
                 api(project(":aws-runtime:aws-core"))
                 api(project(":aws-runtime:aws-endpoint"))
                 api("aws.smithy.kotlin:runtime-core:0.12.5-SNAPSHOT")
+                api("aws.smithy.kotlin:tracing-core:0.12.5-SNAPSHOT")
             }
         }
         commonTest {

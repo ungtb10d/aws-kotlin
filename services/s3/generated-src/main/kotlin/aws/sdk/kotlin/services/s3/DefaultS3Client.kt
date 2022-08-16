@@ -26,6 +26,8 @@ import aws.smithy.kotlin.runtime.http.operation.execute
 import aws.smithy.kotlin.runtime.http.operation.roundTrip
 import aws.smithy.kotlin.runtime.http.sdkHttpClient
 import aws.smithy.kotlin.runtime.io.Closeable
+import aws.smithy.kotlin.runtime.io.use
+import aws.smithy.kotlin.runtime.tracing.DefaultTracer
 import aws.smithy.kotlin.runtime.util.putIfAbsent
 
 
@@ -35,6 +37,7 @@ public const val SdkVersion: String = "0.17.5-SNAPSHOT"
 
 internal class DefaultS3Client(override val config: S3Client.Config) : S3Client {
     private val client: SdkHttpClient
+    private val rootTraceSpan = DefaultTracer(config.traceProbe, config.clientName).createRootSpan()
     init {
         val httpClientEngine = config.httpClientEngine ?: DefaultHttpEngine()
         client = sdkHttpClient(httpClientEngine, manageEngine = config.httpClientEngine == null)
@@ -80,7 +83,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -144,7 +151,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -253,7 +264,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -328,7 +343,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -427,7 +446,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -462,7 +485,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -502,7 +529,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -541,7 +572,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -578,7 +613,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -620,7 +659,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -660,7 +703,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -701,7 +748,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -742,7 +793,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -779,7 +834,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -820,7 +879,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -861,7 +924,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -898,7 +965,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -937,7 +1008,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -979,7 +1054,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1018,7 +1097,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1065,7 +1148,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1102,7 +1189,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1144,7 +1235,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1180,7 +1275,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1220,7 +1319,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1259,7 +1362,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1298,7 +1405,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1340,7 +1451,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1380,7 +1495,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1426,7 +1545,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1465,7 +1588,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1500,7 +1627,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1541,7 +1672,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1581,7 +1716,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1618,7 +1757,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1658,7 +1801,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1697,7 +1844,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1742,7 +1893,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1776,7 +1931,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1817,7 +1976,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1857,7 +2020,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1894,7 +2061,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -1985,7 +2156,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.execute(client, input, block)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.execute(client, input, block)
+            }
+        }
     }
 
     /**
@@ -2030,7 +2205,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2098,7 +2277,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2134,7 +2317,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2168,7 +2355,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2204,7 +2395,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2246,7 +2441,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2286,7 +2485,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.execute(client, input, block)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.execute(client, input, block)
+            }
+        }
     }
 
     /**
@@ -2327,7 +2530,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2364,7 +2571,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2430,7 +2641,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2472,7 +2687,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2514,7 +2733,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2556,7 +2779,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2598,7 +2825,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2629,7 +2860,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2675,7 +2910,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2720,7 +2959,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2760,7 +3003,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2804,7 +3051,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2849,7 +3100,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2898,7 +3153,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -2982,7 +3241,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3038,7 +3301,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3088,7 +3355,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3130,7 +3401,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3185,7 +3460,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3240,7 +3519,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3299,7 +3582,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3356,7 +3643,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3401,7 +3692,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3459,7 +3754,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3497,7 +3796,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3539,7 +3842,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3599,7 +3906,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3635,7 +3946,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3687,7 +4002,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3736,7 +4055,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3796,7 +4119,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3866,7 +4193,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3949,7 +4280,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -3983,7 +4318,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4019,7 +4358,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4053,7 +4396,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4113,7 +4460,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4155,7 +4506,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4263,7 +4618,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4335,7 +4694,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4409,7 +4772,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     /**
@@ -4456,7 +4823,11 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return rootTraceSpan.child(op.sdkRequestId).use { traceSpan ->
+            with(traceSpan) {
+                op.roundTrip(client, input)
+            }
+        }
     }
 
     override fun close() {
