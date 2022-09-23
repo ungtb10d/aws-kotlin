@@ -26,7 +26,6 @@ kotlin {
         commonTest {
             dependencies {
                 implementation(project(":aws-runtime:testing"))
-                implementation("aws.smithy.kotlin:tracing-testing:$smithyKotlinVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion")
             }
         }

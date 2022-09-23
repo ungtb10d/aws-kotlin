@@ -20,7 +20,6 @@ import aws.smithy.kotlin.runtime.http.response.HttpCall
 import aws.smithy.kotlin.runtime.http.response.HttpResponse
 import aws.smithy.kotlin.runtime.http.sdkHttpClient
 import aws.smithy.kotlin.runtime.time.Instant
-import aws.smithy.kotlin.runtime.tracing.NoOpTraceSpan
 import aws.smithy.kotlin.runtime.util.get
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldNotContain
@@ -57,9 +56,7 @@ class UserAgentTest {
         val metadata = loadAwsUserAgentMetadataFromEnvironment(provider, ApiMetadata("Test Service", "1.2.3"))
         op.install(UserAgent(metadata))
 
-        with(NoOpTraceSpan) {
-            op.roundTrip(client, Unit)
-        }
+        op.roundTrip(client, Unit)
         val request = op.context[HttpOperationContext.HttpCallList].last().request
         assertTrue(request.headers.contains(USER_AGENT))
         assertTrue(request.headers.contains(X_AMZ_USER_AGENT))
@@ -86,9 +83,7 @@ class UserAgentTest {
 
         op.context.customUserAgentMetadata.add("foo", "bar")
 
-        with(NoOpTraceSpan) {
-            op.roundTrip(client, Unit)
-        }
+        op.roundTrip(client, Unit)
         val request = op.context[HttpOperationContext.HttpCallList].last().request
 
         request.headers[USER_AGENT]!!.shouldContain("md/foo/bar")
@@ -107,9 +102,7 @@ class UserAgentTest {
 
         op2.context.customUserAgentMetadata.add("baz", "quux")
 
-        with(NoOpTraceSpan) {
-            op2.roundTrip(client, Unit)
-        }
+        op2.roundTrip(client, Unit)
         val request2 = op2.context[HttpOperationContext.HttpCallList].last().request
 
         request2.headers[USER_AGENT]!!.shouldNotContain("md/foo/bar")
