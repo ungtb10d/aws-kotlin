@@ -20,6 +20,7 @@ import aws.smithy.kotlin.runtime.http.response.HttpCall
 import aws.smithy.kotlin.runtime.http.response.HttpResponse
 import aws.smithy.kotlin.runtime.http.sdkHttpClient
 import aws.smithy.kotlin.runtime.time.Instant
+import aws.smithy.kotlin.runtime.tracing.NoOpTraceSpan
 import aws.smithy.kotlin.runtime.util.get
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldNotContain
@@ -49,6 +50,7 @@ class UserAgentTest {
             context {
                 service = "Test Service"
                 operationName = "testOperation"
+                traceSpan = NoOpTraceSpan
             }
         }
 
@@ -74,6 +76,7 @@ class UserAgentTest {
             context {
                 service = "Test Service"
                 operationName = "testOperation"
+                traceSpan = NoOpTraceSpan
             }
         }
 
@@ -95,6 +98,7 @@ class UserAgentTest {
             context {
                 service = "Test Service"
                 operationName = "testOperation2"
+                traceSpan = NoOpTraceSpan
             }
         }
 
