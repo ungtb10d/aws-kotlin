@@ -23,8 +23,11 @@ import aws.smithy.kotlin.runtime.http.middleware.MutateHeaders
 import aws.smithy.kotlin.runtime.http.operation.SdkHttpOperation
 import aws.smithy.kotlin.runtime.http.operation.context
 import aws.smithy.kotlin.runtime.http.operation.roundTrip
+import aws.smithy.kotlin.runtime.http.operation.sdkRequestId
 import aws.smithy.kotlin.runtime.http.sdkHttpClient
 import aws.smithy.kotlin.runtime.io.Closeable
+import aws.smithy.kotlin.runtime.tracing.DefaultTracer
+import aws.smithy.kotlin.runtime.tracing.childTraceSpan
 import aws.smithy.kotlin.runtime.util.putIfAbsent
 
 
@@ -34,6 +37,7 @@ public const val SdkVersion: String = "0.17.7-SNAPSHOT"
 
 internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Client {
     private val client: SdkHttpClient
+    private val rootTraceSpan = DefaultTracer(config.traceProbe, config.clientName).createRootSpan()
     init {
         val httpClientEngine = config.httpClientEngine ?: DefaultHttpEngine()
         client = sdkHttpClient(httpClientEngine, manageEngine = config.httpClientEngine == null)
@@ -51,6 +55,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AcceptReservedInstancesExchangeQuote"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -70,7 +75,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -84,6 +91,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AcceptTransitGatewayMulticastDomainAssociations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -103,7 +111,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -117,6 +127,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AcceptTransitGatewayPeeringAttachment"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -136,7 +147,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -152,6 +165,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AcceptTransitGatewayVpcAttachment"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -171,7 +185,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -185,6 +201,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AcceptVpcEndpointConnections"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -204,7 +221,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -220,6 +239,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AcceptVpcPeeringConnection"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -239,7 +259,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -261,6 +283,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AdvertiseByoipCidr"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -280,7 +303,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -306,6 +331,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AllocateAddress"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -325,7 +351,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -339,6 +367,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AllocateHosts"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -358,7 +387,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -372,6 +403,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AllocateIpamPoolCidr"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -391,7 +423,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -405,6 +439,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ApplySecurityGroupsToClientVpnTargetNetwork"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -424,7 +459,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -442,6 +479,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AssignIpv6Addresses"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -461,7 +499,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -485,6 +525,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AssignPrivateIpAddresses"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -504,7 +545,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -532,6 +575,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AssociateAddress"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -551,7 +595,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -567,6 +613,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AssociateClientVpnTargetNetwork"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -586,7 +633,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -604,6 +653,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AssociateDhcpOptions"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -623,7 +673,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -641,6 +693,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AssociateEnclaveCertificateIamRole"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -660,7 +713,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -674,6 +729,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AssociateIamInstanceProfile"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -693,7 +749,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -709,6 +767,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AssociateInstanceEventWindow"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -728,7 +787,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -744,6 +805,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AssociateRouteTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -763,7 +825,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -777,6 +841,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AssociateSubnetCidrBlock"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -796,7 +861,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -812,6 +879,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AssociateTransitGatewayMulticastDomain"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -831,7 +899,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -845,6 +915,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AssociateTransitGatewayPolicyTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -864,7 +935,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -878,6 +951,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AssociateTransitGatewayRouteTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -897,7 +971,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -915,6 +991,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AssociateTrunkInterface"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -934,7 +1011,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -952,6 +1031,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AssociateVpcCidrBlock"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -971,7 +1051,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -991,6 +1073,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AttachClassicLinkVpc"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1010,7 +1093,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1024,6 +1109,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AttachInternetGateway"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1043,7 +1129,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1057,6 +1145,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AttachNetworkInterface"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1076,7 +1165,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1102,6 +1193,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AttachVolume"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1121,7 +1213,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1137,6 +1231,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AttachVpnGateway"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1156,7 +1251,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1170,6 +1267,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AuthorizeClientVpnIngress"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1189,7 +1287,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1211,6 +1311,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AuthorizeSecurityGroupEgress"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1230,7 +1331,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1254,6 +1357,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AuthorizeSecurityGroupIngress"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1273,7 +1377,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1291,6 +1397,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "BundleInstance"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1310,7 +1417,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1324,6 +1433,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CancelBundleTask"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1343,7 +1453,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1359,6 +1471,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CancelCapacityReservation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1378,7 +1491,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1395,6 +1510,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CancelCapacityReservationFleets"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1414,7 +1530,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1430,6 +1548,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CancelConversionTask"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1449,7 +1568,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1463,6 +1584,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CancelExportTask"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1482,7 +1604,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1496,6 +1620,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CancelImportTask"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1515,7 +1640,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1531,6 +1658,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CancelReservedInstancesListing"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1550,7 +1678,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1566,6 +1696,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CancelSpotFleetRequests"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1585,7 +1716,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1601,6 +1734,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CancelSpotInstanceRequests"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1620,7 +1754,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1634,6 +1770,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ConfirmProductInstance"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1653,7 +1790,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1667,6 +1806,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CopyFpgaImage"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1686,7 +1826,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1706,6 +1848,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CopyImage"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1725,7 +1868,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1749,6 +1894,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CopySnapshot"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1768,7 +1914,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1788,6 +1936,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateCapacityReservation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1807,7 +1956,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1821,6 +1972,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateCapacityReservationFleet"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1840,7 +1992,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1854,6 +2008,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateCarrierGateway"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1873,7 +2028,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1887,6 +2044,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateClientVpnEndpoint"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1906,7 +2064,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1920,6 +2080,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateClientVpnRoute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1939,7 +2100,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1953,6 +2116,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateCoipCidr"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1972,7 +2136,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1986,6 +2152,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateCoipPool"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2005,7 +2172,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2023,6 +2192,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateCustomerGateway"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2042,7 +2212,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2056,6 +2228,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateDefaultSubnet"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2075,7 +2248,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2095,6 +2270,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateDefaultVpc"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2114,7 +2290,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2135,6 +2313,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateDhcpOptions"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2154,7 +2333,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2168,6 +2349,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateEgressOnlyInternetGateway"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2187,7 +2369,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2205,6 +2389,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateFleet"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2224,7 +2409,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2244,6 +2431,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateFlowLogs"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2263,7 +2451,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2281,6 +2471,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateFpgaImage"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2300,7 +2491,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2322,6 +2515,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateImage"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2341,7 +2535,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2368,6 +2564,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateInstanceEventWindow"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2387,7 +2584,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2403,6 +2602,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateInstanceExportTask"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2422,7 +2622,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2438,6 +2640,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateInternetGateway"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2457,7 +2660,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2473,6 +2678,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateIpam"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2492,7 +2698,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2508,6 +2716,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateIpamPool"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2527,7 +2736,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2543,6 +2754,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateIpamScope"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2562,7 +2774,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2582,6 +2796,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateKeyPair"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2601,7 +2816,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2619,6 +2836,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateLaunchTemplate"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2638,7 +2856,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2658,6 +2878,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateLaunchTemplateVersion"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2677,7 +2898,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2693,6 +2916,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateLocalGatewayRoute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2712,7 +2936,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2726,6 +2952,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateLocalGatewayRouteTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2745,7 +2972,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2759,6 +2988,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateLocalGatewayRouteTableVirtualInterfaceGroupAssociation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2778,7 +3008,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2792,6 +3024,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateLocalGatewayRouteTableVpcAssociation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2811,7 +3044,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2825,6 +3060,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateManagedPrefixList"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2844,7 +3080,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2864,6 +3102,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateNatGateway"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2883,7 +3122,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2899,6 +3140,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateNetworkAcl"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2918,7 +3160,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2938,6 +3182,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateNetworkAclEntry"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2957,7 +3202,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2973,6 +3220,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateNetworkInsightsAccessScope"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2992,7 +3240,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3008,6 +3258,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateNetworkInsightsPath"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3027,7 +3278,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3043,6 +3296,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateNetworkInterface"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3062,7 +3316,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3078,6 +3334,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateNetworkInterfacePermission"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3097,7 +3354,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3115,6 +3374,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreatePlacementGroup"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3134,7 +3394,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3148,6 +3410,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreatePublicIpv4Pool"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3167,7 +3430,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3183,6 +3448,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateReplaceRootVolumeTask"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3202,7 +3468,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3224,6 +3492,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateReservedInstancesListing"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3243,7 +3512,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3261,6 +3532,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateRestoreImageTask"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3280,7 +3552,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3304,6 +3578,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateRoute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3323,7 +3598,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3339,6 +3616,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateRouteTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3358,7 +3636,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3384,6 +3664,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateSecurityGroup"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3403,7 +3684,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3431,6 +3714,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateSnapshot"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3450,7 +3734,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3466,6 +3752,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateSnapshots"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3485,7 +3772,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3499,6 +3788,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateSpotDatafeedSubscription"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3518,7 +3808,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3536,6 +3828,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateStoreImageTask"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3555,7 +3848,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3581,6 +3876,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateSubnet"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3600,7 +3896,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3614,6 +3912,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateSubnetCidrReservation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3633,7 +3932,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3649,6 +3950,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateTags"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3668,7 +3970,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3686,6 +3990,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateTrafficMirrorFilter"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3705,7 +4010,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3723,6 +4030,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateTrafficMirrorFilterRule"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3742,7 +4050,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3762,6 +4072,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateTrafficMirrorSession"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3781,7 +4092,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3801,6 +4114,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateTrafficMirrorTarget"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3820,7 +4134,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3842,6 +4158,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateTransitGateway"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3861,7 +4178,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3877,6 +4196,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateTransitGatewayConnect"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3896,7 +4216,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3914,6 +4236,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateTransitGatewayConnectPeer"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3933,7 +4256,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3949,6 +4274,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateTransitGatewayMulticastDomain"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3968,7 +4294,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3984,6 +4312,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateTransitGatewayPeeringAttachment"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4003,7 +4332,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4017,6 +4348,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateTransitGatewayPolicyTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4036,7 +4368,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4050,6 +4384,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateTransitGatewayPrefixListReference"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4069,7 +4404,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4083,6 +4420,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateTransitGatewayRoute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4102,7 +4440,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4116,6 +4456,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateTransitGatewayRouteTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4135,7 +4476,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4149,6 +4492,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateTransitGatewayRouteTableAnnouncement"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4168,7 +4512,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4186,6 +4532,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateTransitGatewayVpcAttachment"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4205,7 +4552,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4227,6 +4576,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateVolume"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4246,7 +4596,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4266,6 +4618,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateVpc"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4285,7 +4638,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4299,6 +4654,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateVpcEndpoint"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4318,7 +4674,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4334,6 +4692,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateVpcEndpointConnectionNotification"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4353,7 +4712,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4375,6 +4736,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateVpcEndpointServiceConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4394,7 +4756,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4414,6 +4778,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateVpcPeeringConnection"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4433,7 +4798,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4457,6 +4824,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateVpnConnection"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4476,7 +4844,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4492,6 +4862,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateVpnConnectionRoute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4511,7 +4882,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4527,6 +4900,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateVpnGateway"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4546,7 +4920,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4562,6 +4938,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteCarrierGateway"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4581,7 +4958,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4595,6 +4974,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteClientVpnEndpoint"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4614,7 +4994,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4628,6 +5010,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteClientVpnRoute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4647,7 +5030,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4661,6 +5046,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteCoipCidr"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4680,7 +5066,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4694,6 +5082,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteCoipPool"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4713,7 +5102,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4727,6 +5118,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteCustomerGateway"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4746,7 +5138,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4760,6 +5154,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteDhcpOptions"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4779,7 +5174,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4793,6 +5190,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteEgressOnlyInternetGateway"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4812,7 +5210,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4838,6 +5238,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteFleets"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4857,7 +5258,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4871,6 +5274,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteFlowLogs"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4890,7 +5294,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4904,6 +5310,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteFpgaImage"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4923,7 +5330,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4939,6 +5348,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteInstanceEventWindow"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4958,7 +5368,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4972,6 +5384,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteInternetGateway"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4991,7 +5404,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5007,6 +5422,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteIpam"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5026,7 +5442,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5044,6 +5462,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteIpamPool"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5063,7 +5482,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5079,6 +5500,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteIpamScope"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5098,7 +5520,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5112,6 +5536,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteKeyPair"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5131,7 +5556,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5145,6 +5572,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteLaunchTemplate"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5164,7 +5592,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5178,6 +5608,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteLaunchTemplateVersions"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5197,7 +5628,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5211,6 +5644,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteLocalGatewayRoute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5230,7 +5664,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5244,6 +5680,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteLocalGatewayRouteTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5263,7 +5700,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5277,6 +5716,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteLocalGatewayRouteTableVirtualInterfaceGroupAssociation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5296,7 +5736,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5310,6 +5752,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteLocalGatewayRouteTableVpcAssociation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5329,7 +5772,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5343,6 +5788,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteManagedPrefixList"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5362,7 +5808,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5376,6 +5824,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteNatGateway"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5395,7 +5844,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5409,6 +5860,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteNetworkAcl"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5428,7 +5880,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5442,6 +5896,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteNetworkAclEntry"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5461,7 +5916,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5475,6 +5932,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteNetworkInsightsAccessScope"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5494,7 +5952,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5508,6 +5968,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteNetworkInsightsAccessScopeAnalysis"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5527,7 +5988,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5541,6 +6004,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteNetworkInsightsAnalysis"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5560,7 +6024,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5574,6 +6040,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteNetworkInsightsPath"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5593,7 +6060,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5607,6 +6076,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteNetworkInterface"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5626,7 +6096,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5640,6 +6112,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteNetworkInterfacePermission"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5659,7 +6132,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5673,6 +6148,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeletePlacementGroup"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5692,7 +6168,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5706,6 +6184,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeletePublicIpv4Pool"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5725,7 +6204,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5739,6 +6220,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteQueuedReservedInstances"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5758,7 +6240,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5772,6 +6256,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteRoute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5791,7 +6276,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5805,6 +6292,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteRouteTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5824,7 +6312,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5842,6 +6332,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteSecurityGroup"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5861,7 +6352,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5881,6 +6374,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteSnapshot"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5900,7 +6394,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5914,6 +6410,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteSpotDatafeedSubscription"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5933,7 +6430,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5947,6 +6446,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteSubnet"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5966,7 +6466,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -5980,6 +6482,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteSubnetCidrReservation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -5999,7 +6502,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6015,6 +6520,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteTags"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6034,7 +6540,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6050,6 +6558,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteTrafficMirrorFilter"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6069,7 +6578,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6083,6 +6594,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteTrafficMirrorFilterRule"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6102,7 +6614,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6116,6 +6630,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteTrafficMirrorSession"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6135,7 +6650,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6151,6 +6668,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteTrafficMirrorTarget"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6170,7 +6688,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6184,6 +6704,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteTransitGateway"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6203,7 +6724,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6217,6 +6740,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteTransitGatewayConnect"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6236,7 +6760,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6250,6 +6776,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteTransitGatewayConnectPeer"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6269,7 +6796,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6283,6 +6812,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteTransitGatewayMulticastDomain"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6302,7 +6832,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6316,6 +6848,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteTransitGatewayPeeringAttachment"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6335,7 +6868,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6349,6 +6884,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteTransitGatewayPolicyTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6368,7 +6904,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6382,6 +6920,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteTransitGatewayPrefixListReference"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6401,7 +6940,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6415,6 +6956,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteTransitGatewayRoute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6434,7 +6976,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6448,6 +6992,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteTransitGatewayRouteTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6467,7 +7012,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6481,6 +7028,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteTransitGatewayRouteTableAnnouncement"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6500,7 +7048,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6514,6 +7064,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteTransitGatewayVpcAttachment"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6533,7 +7084,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6551,6 +7104,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteVolume"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6570,7 +7124,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6584,6 +7140,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteVpc"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6603,7 +7160,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6617,6 +7176,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteVpcEndpointConnectionNotifications"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6636,7 +7196,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6650,6 +7212,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteVpcEndpointServiceConfigurations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6669,7 +7232,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6691,6 +7256,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteVpcEndpoints"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6710,7 +7276,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6724,6 +7292,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteVpcPeeringConnection"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6743,7 +7312,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6761,6 +7332,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteVpnConnection"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6780,7 +7352,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6794,6 +7368,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteVpnConnectionRoute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6813,7 +7388,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6827,6 +7404,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteVpnGateway"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6846,7 +7424,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6862,6 +7442,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeprovisionByoipCidr"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6881,7 +7462,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6895,6 +7478,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeprovisionIpamPoolCidr"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6914,7 +7498,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6928,6 +7514,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeprovisionPublicIpv4PoolCidr"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6947,7 +7534,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -6967,6 +7556,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeregisterImage"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -6986,7 +7576,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7000,6 +7592,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeregisterInstanceEventNotificationAttributes"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7019,7 +7612,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7033,6 +7628,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeregisterTransitGatewayMulticastGroupMembers"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7052,7 +7648,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7066,6 +7664,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeregisterTransitGatewayMulticastGroupSources"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7085,7 +7684,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7107,6 +7708,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeAccountAttributes"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7126,7 +7728,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7144,6 +7748,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeAddresses"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7163,7 +7768,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7177,6 +7784,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeAddressesAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7196,7 +7804,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7214,6 +7824,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeAggregateIdFormat"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7233,7 +7844,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7249,6 +7862,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeAvailabilityZones"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7268,7 +7882,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7284,6 +7900,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeBundleTasks"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7303,7 +7920,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7319,6 +7938,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeByoipCidrs"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7338,7 +7958,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7352,6 +7974,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeCapacityReservationFleets"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7371,7 +7994,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7385,6 +8010,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeCapacityReservations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7404,7 +8030,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7418,6 +8046,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeCarrierGateways"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7437,7 +8066,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7453,6 +8084,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeClassicLinkInstances"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7472,7 +8104,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7486,6 +8120,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeClientVpnAuthorizationRules"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7505,7 +8140,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7519,6 +8156,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeClientVpnConnections"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7538,7 +8176,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7552,6 +8192,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeClientVpnEndpoints"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7571,7 +8212,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7585,6 +8228,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeClientVpnRoutes"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7604,7 +8248,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7618,6 +8264,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeClientVpnTargetNetworks"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7637,7 +8284,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7651,6 +8300,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeCoipPools"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7670,7 +8320,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7686,6 +8338,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeConversionTasks"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7705,7 +8358,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7721,6 +8376,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeCustomerGateways"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7740,7 +8396,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7756,6 +8414,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeDhcpOptions"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7775,7 +8434,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7789,6 +8450,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeEgressOnlyInternetGateways"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7808,7 +8470,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7822,6 +8486,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeElasticGpus"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7841,7 +8506,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7855,6 +8522,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeExportImageTasks"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7874,7 +8542,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7888,6 +8558,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeExportTasks"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7907,7 +8578,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7921,6 +8594,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeFastLaunchImages"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7940,7 +8614,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7954,6 +8630,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeFastSnapshotRestores"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -7973,7 +8650,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -7991,6 +8670,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeFleetHistory"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8010,7 +8690,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8026,6 +8708,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeFleetInstances"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8045,7 +8728,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8061,6 +8746,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeFleets"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8080,7 +8766,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8096,6 +8784,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeFlowLogs"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8115,7 +8804,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8129,6 +8820,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeFpgaImageAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8148,7 +8840,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8162,6 +8856,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeFpgaImages"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8181,7 +8876,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8197,6 +8894,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeHostReservationOfferings"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8216,7 +8914,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8230,6 +8930,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeHostReservations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8249,7 +8950,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8265,6 +8968,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeHosts"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8284,7 +8988,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8298,6 +9004,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeIamInstanceProfileAssociations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8317,7 +9024,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8335,6 +9044,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeIdFormat"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8354,7 +9064,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8372,6 +9084,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeIdentityIdFormat"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8391,7 +9104,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8405,6 +9120,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeImageAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8424,7 +9140,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8442,6 +9160,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeImages"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8461,7 +9180,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8475,6 +9196,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeImportImageTasks"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8494,7 +9216,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8508,6 +9232,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeImportSnapshotTasks"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8527,7 +9252,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8541,6 +9268,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeInstanceAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8560,7 +9288,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8584,6 +9314,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeInstanceCreditSpecifications"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8603,7 +9334,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8617,6 +9350,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeInstanceEventNotificationAttributes"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8636,7 +9370,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8654,6 +9390,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeInstanceEventWindows"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8673,7 +9410,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8692,6 +9431,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeInstanceStatus"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8711,7 +9451,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8725,6 +9467,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeInstanceTypeOfferings"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8744,7 +9487,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8758,6 +9503,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeInstanceTypes"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8777,7 +9523,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8801,6 +9549,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeInstances"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8820,7 +9569,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8834,6 +9585,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeInternetGateways"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8853,7 +9605,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8867,6 +9621,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeIpamPools"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8886,7 +9641,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8900,6 +9657,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeIpamScopes"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8919,7 +9677,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8935,6 +9695,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeIpams"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8954,7 +9715,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -8968,6 +9731,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeIpv6Pools"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -8987,7 +9751,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9003,6 +9769,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeKeyPairs"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9022,7 +9789,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9036,6 +9805,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeLaunchTemplateVersions"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9055,7 +9825,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9069,6 +9841,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeLaunchTemplates"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9088,7 +9861,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9102,6 +9877,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeLocalGatewayRouteTableVirtualInterfaceGroupAssociations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9121,7 +9897,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9135,6 +9913,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeLocalGatewayRouteTableVpcAssociations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9154,7 +9933,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9168,6 +9949,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeLocalGatewayRouteTables"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9187,7 +9969,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9201,6 +9985,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeLocalGatewayVirtualInterfaceGroups"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9220,7 +10005,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9234,6 +10021,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeLocalGatewayVirtualInterfaces"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9253,7 +10041,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9267,6 +10057,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeLocalGateways"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9286,7 +10077,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9302,6 +10095,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeManagedPrefixLists"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9321,7 +10115,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9335,6 +10131,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeMovingAddresses"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9354,7 +10151,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9368,6 +10167,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeNatGateways"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9387,7 +10187,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9403,6 +10205,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeNetworkAcls"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9422,7 +10225,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9436,6 +10241,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeNetworkInsightsAccessScopeAnalyses"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9455,7 +10261,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9469,6 +10277,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeNetworkInsightsAccessScopes"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9488,7 +10297,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9502,6 +10313,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeNetworkInsightsAnalyses"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9521,7 +10333,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9535,6 +10349,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeNetworkInsightsPaths"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9554,7 +10369,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9568,6 +10385,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeNetworkInterfaceAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9587,7 +10405,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9601,6 +10421,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeNetworkInterfacePermissions"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9620,7 +10441,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9634,6 +10457,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeNetworkInterfaces"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9653,7 +10477,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9667,6 +10493,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribePlacementGroups"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9686,7 +10513,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9702,6 +10531,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribePrefixLists"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9721,7 +10551,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9739,6 +10571,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribePrincipalIdFormat"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9758,7 +10591,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9772,6 +10607,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribePublicIpv4Pools"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9791,7 +10627,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9809,6 +10647,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeRegions"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9828,7 +10667,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9842,6 +10683,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeReplaceRootVolumeTasks"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9861,7 +10703,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9879,6 +10723,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeReservedInstances"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9898,7 +10743,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9920,6 +10767,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeReservedInstancesListings"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9939,7 +10787,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9957,6 +10807,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeReservedInstancesModifications"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -9976,7 +10827,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -9996,6 +10849,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeReservedInstancesOfferings"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10015,7 +10869,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10033,6 +10889,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeRouteTables"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10052,7 +10909,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10072,6 +10931,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeScheduledInstanceAvailability"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10091,7 +10951,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10107,6 +10969,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeScheduledInstances"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10126,7 +10989,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10140,6 +11005,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeSecurityGroupReferences"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10159,7 +11025,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10173,6 +11041,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeSecurityGroupRules"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10192,7 +11061,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10210,6 +11081,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeSecurityGroups"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10229,7 +11101,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10245,6 +11119,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeSnapshotAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10264,7 +11139,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10278,6 +11155,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeSnapshotTierStatus"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10297,7 +11175,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10332,6 +11212,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeSnapshots"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10351,7 +11232,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10365,6 +11248,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeSpotDatafeedSubscription"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10384,7 +11268,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10398,6 +11284,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeSpotFleetInstances"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10417,7 +11304,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10435,6 +11324,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeSpotFleetRequestHistory"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10454,7 +11344,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10470,6 +11362,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeSpotFleetRequests"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10489,7 +11382,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10509,6 +11404,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeSpotInstanceRequests"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10528,7 +11424,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10544,6 +11442,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeSpotPriceHistory"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10563,7 +11462,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10577,6 +11478,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeStaleSecurityGroups"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10596,7 +11498,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10618,6 +11522,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeStoreImageTasks"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10637,7 +11542,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10653,6 +11560,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeSubnets"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10672,7 +11580,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10688,6 +11598,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeTags"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10707,7 +11618,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10721,6 +11634,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeTrafficMirrorFilters"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10740,7 +11654,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10754,6 +11670,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeTrafficMirrorSessions"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10773,7 +11690,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10787,6 +11706,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeTrafficMirrorTargets"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10806,7 +11726,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10820,6 +11742,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeTransitGatewayAttachments"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10839,7 +11762,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10853,6 +11778,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeTransitGatewayConnectPeers"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10872,7 +11798,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10886,6 +11814,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeTransitGatewayConnects"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10905,7 +11834,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10919,6 +11850,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeTransitGatewayMulticastDomains"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10938,7 +11870,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10952,6 +11886,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeTransitGatewayPeeringAttachments"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -10971,7 +11906,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -10985,6 +11922,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeTransitGatewayPolicyTables"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11004,7 +11942,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11018,6 +11958,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeTransitGatewayRouteTableAnnouncements"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11037,7 +11978,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11051,6 +11994,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeTransitGatewayRouteTables"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11070,7 +12014,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11084,6 +12030,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeTransitGatewayVpcAttachments"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11103,7 +12050,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11117,6 +12066,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeTransitGateways"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11136,7 +12086,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11152,6 +12104,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeTrunkInterfaceAssociations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11171,7 +12124,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11187,6 +12142,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeVolumeAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11206,7 +12162,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11230,6 +12188,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeVolumeStatus"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11249,7 +12208,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11267,6 +12228,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeVolumes"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11286,7 +12248,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11304,6 +12268,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeVolumesModifications"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11323,7 +12288,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11337,6 +12304,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeVpcAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11356,7 +12324,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11372,6 +12342,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeVpcClassicLink"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11391,7 +12362,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11407,6 +12380,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeVpcClassicLinkDnsSupport"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11426,7 +12400,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11440,6 +12416,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeVpcEndpointConnectionNotifications"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11459,7 +12436,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11473,6 +12452,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeVpcEndpointConnections"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11492,7 +12472,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11506,6 +12488,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeVpcEndpointServiceConfigurations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11525,7 +12508,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11539,6 +12524,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeVpcEndpointServicePermissions"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11558,7 +12544,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11574,6 +12562,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeVpcEndpointServices"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11593,7 +12582,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11607,6 +12598,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeVpcEndpoints"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11626,7 +12618,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11640,6 +12634,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeVpcPeeringConnections"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11659,7 +12654,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11673,6 +12670,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeVpcs"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11692,7 +12690,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11708,6 +12708,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeVpnConnections"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11727,7 +12728,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11743,6 +12746,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeVpnGateways"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11762,7 +12766,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11778,6 +12784,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DetachClassicLinkVpc"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11797,7 +12804,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11811,6 +12820,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DetachInternetGateway"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11830,7 +12840,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11844,6 +12856,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DetachNetworkInterface"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11863,7 +12876,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11881,6 +12896,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DetachVolume"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11900,7 +12916,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11916,6 +12934,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DetachVpnGateway"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11935,7 +12954,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11955,6 +12976,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisableEbsEncryptionByDefault"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -11974,7 +12996,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -11990,6 +13014,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisableFastLaunch"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12009,7 +13034,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12023,6 +13050,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisableFastSnapshotRestores"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12042,7 +13070,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12058,6 +13088,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisableImageDeprecation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12077,7 +13108,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12091,6 +13124,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisableIpamOrganizationAdminAccount"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12110,7 +13144,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12124,6 +13160,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisableSerialConsoleAccess"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12143,7 +13180,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12157,6 +13196,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisableTransitGatewayRouteTablePropagation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12176,7 +13216,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12190,6 +13232,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisableVgwRoutePropagation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12209,7 +13252,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12225,6 +13270,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisableVpcClassicLink"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12244,7 +13290,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12262,6 +13310,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisableVpcClassicLinkDnsSupport"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12281,7 +13330,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12301,6 +13352,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisassociateAddress"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12320,7 +13372,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12338,6 +13392,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisassociateClientVpnTargetNetwork"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12357,7 +13412,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12371,6 +13428,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisassociateEnclaveCertificateIamRole"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12390,7 +13448,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12406,6 +13466,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisassociateIamInstanceProfile"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12425,7 +13486,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12441,6 +13504,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisassociateInstanceEventWindow"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12460,7 +13524,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12476,6 +13542,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisassociateRouteTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12495,7 +13562,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12509,6 +13578,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisassociateSubnetCidrBlock"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12528,7 +13598,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12542,6 +13614,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisassociateTransitGatewayMulticastDomain"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12561,7 +13634,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12575,6 +13650,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisassociateTransitGatewayPolicyTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12594,7 +13670,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12608,6 +13686,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisassociateTransitGatewayRouteTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12627,7 +13706,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12643,6 +13724,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisassociateTrunkInterface"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12662,7 +13744,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12678,6 +13762,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisassociateVpcCidrBlock"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12697,7 +13782,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12719,6 +13806,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "EnableEbsEncryptionByDefault"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12738,7 +13826,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12754,6 +13844,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "EnableFastLaunch"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12773,7 +13864,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12791,6 +13884,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "EnableFastSnapshotRestores"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12810,7 +13904,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12826,6 +13922,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "EnableImageDeprecation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12845,7 +13942,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12859,6 +13958,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "EnableIpamOrganizationAdminAccount"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12878,7 +13978,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12892,6 +13994,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "EnableSerialConsoleAccess"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12911,7 +14014,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12925,6 +14030,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "EnableTransitGatewayRouteTablePropagation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12944,7 +14050,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12958,6 +14066,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "EnableVgwRoutePropagation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -12977,7 +14086,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -12991,6 +14102,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "EnableVolumeIO"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13010,7 +14122,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13026,6 +14140,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "EnableVpcClassicLink"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13045,7 +14160,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13063,6 +14180,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "EnableVpcClassicLinkDnsSupport"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13082,7 +14200,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13096,6 +14216,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ExportClientVpnClientCertificateRevocationList"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13115,7 +14236,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13129,6 +14252,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ExportClientVpnClientConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13148,7 +14272,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13162,6 +14288,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ExportImage"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13181,7 +14308,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13197,6 +14326,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ExportTransitGatewayRoutes"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13216,7 +14346,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13230,6 +14362,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetAssociatedEnclaveCertificateIamRoles"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13249,7 +14382,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13263,6 +14398,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetAssociatedIpv6PoolCidrs"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13282,7 +14418,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13296,6 +14434,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetCapacityReservationUsage"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13315,7 +14454,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13329,6 +14470,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetCoipPoolUsage"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13348,7 +14490,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13368,6 +14512,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetConsoleOutput"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13387,7 +14532,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13403,6 +14550,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetConsoleScreenshot"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13422,7 +14570,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13438,6 +14588,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetDefaultCreditSpecification"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13457,7 +14608,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13473,6 +14626,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetEbsDefaultKmsKeyId"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13492,7 +14646,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13508,6 +14664,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetEbsEncryptionByDefault"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13527,7 +14684,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13545,6 +14704,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetFlowLogsIntegrationTemplate"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13564,7 +14724,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13578,6 +14740,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetGroupsForCapacityReservation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13597,7 +14760,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13613,6 +14778,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetHostReservationPurchasePreview"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13632,7 +14798,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13650,6 +14818,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetInstanceTypesFromInstanceRequirements"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13669,7 +14838,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13687,6 +14858,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetInstanceUefiData"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13706,7 +14878,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13720,6 +14894,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetIpamAddressHistory"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13739,7 +14914,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13753,6 +14930,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetIpamPoolAllocations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13772,7 +14950,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13786,6 +14966,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetIpamPoolCidrs"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13805,7 +14986,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13819,6 +15002,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetIpamResourceCidrs"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13838,7 +15022,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13854,6 +15040,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetLaunchTemplateData"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13873,7 +15060,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13887,6 +15076,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetManagedPrefixListAssociations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13906,7 +15096,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13920,6 +15112,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetManagedPrefixListEntries"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13939,7 +15132,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13953,6 +15148,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetNetworkInsightsAccessScopeAnalysisFindings"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -13972,7 +15168,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -13986,6 +15184,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetNetworkInsightsAccessScopeContent"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14005,7 +15204,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14027,6 +15228,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetPasswordData"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14046,7 +15248,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14060,6 +15264,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetReservedInstancesExchangeQuote"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14079,7 +15284,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14093,6 +15300,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetSerialConsoleAccessStatus"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14112,7 +15320,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14130,6 +15340,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetSpotPlacementScores"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14149,7 +15360,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14163,6 +15376,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetSubnetCidrReservations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14182,7 +15396,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14196,6 +15412,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetTransitGatewayAttachmentPropagations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14215,7 +15432,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14229,6 +15448,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetTransitGatewayMulticastDomainAssociations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14248,7 +15468,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14262,6 +15484,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetTransitGatewayPolicyTableAssociations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14281,7 +15504,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14295,6 +15520,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetTransitGatewayPolicyTableEntries"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14314,7 +15540,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14328,6 +15556,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetTransitGatewayPrefixListReferences"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14347,7 +15576,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14361,6 +15592,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetTransitGatewayRouteTableAssociations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14380,7 +15612,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14394,6 +15628,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetTransitGatewayRouteTablePropagations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14413,7 +15648,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14427,6 +15664,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetVpnConnectionDeviceSampleConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14446,7 +15684,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14460,6 +15700,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetVpnConnectionDeviceTypes"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14479,7 +15720,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14495,6 +15738,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ImportClientVpnClientCertificateRevocationList"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14514,7 +15758,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14530,6 +15776,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ImportImage"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14549,7 +15796,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14569,6 +15818,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ImportInstance"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14588,7 +15838,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14604,6 +15856,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ImportKeyPair"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14623,7 +15876,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14639,6 +15894,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ImportSnapshot"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14658,7 +15914,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14678,6 +15936,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ImportVolume"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14697,7 +15956,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14711,6 +15972,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListImagesInRecycleBin"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14730,7 +15992,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14744,6 +16008,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListSnapshotsInRecycleBin"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14763,7 +16028,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14777,6 +16044,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyAddressAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14796,7 +16064,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14812,6 +16082,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyAvailabilityZoneGroup"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14831,7 +16102,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14845,6 +16118,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyCapacityReservation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14864,7 +16138,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14880,6 +16156,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyCapacityReservationFleet"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14899,7 +16176,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14913,6 +16192,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyClientVpnEndpoint"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14932,7 +16212,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14950,6 +16232,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyDefaultCreditSpecification"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -14969,7 +16252,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -14989,6 +16274,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyEbsDefaultKmsKeyId"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15008,7 +16294,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15032,6 +16320,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyFleet"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15051,7 +16340,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15065,6 +16356,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyFpgaImageAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15084,7 +16376,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15100,6 +16394,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyHosts"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15119,7 +16414,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15139,6 +16436,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyIdFormat"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15158,7 +16456,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15180,6 +16480,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyIdentityIdFormat"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15199,7 +16500,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15217,6 +16520,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyImageAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15236,7 +16540,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15254,6 +16560,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyInstanceAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15273,7 +16580,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15287,6 +16596,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyInstanceCapacityReservationAttributes"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15306,7 +16616,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15322,6 +16634,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyInstanceCreditSpecification"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15341,7 +16654,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15355,6 +16670,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyInstanceEventStartTime"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15374,7 +16690,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15396,6 +16714,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyInstanceEventWindow"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15415,7 +16734,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15429,6 +16750,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyInstanceMaintenanceOptions"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15448,7 +16770,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15462,6 +16786,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyInstanceMetadataOptions"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15481,7 +16806,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15503,6 +16830,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyInstancePlacement"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15522,7 +16850,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15536,6 +16866,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyIpam"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15555,7 +16886,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15571,6 +16904,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyIpamPool"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15590,7 +16924,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15606,6 +16942,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyIpamResourceCidr"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15625,7 +16962,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15639,6 +16978,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyIpamScope"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15658,7 +16998,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15672,6 +17014,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyLaunchTemplate"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15691,7 +17034,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15705,6 +17050,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyLocalGatewayRoute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15724,7 +17070,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15742,6 +17090,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyManagedPrefixList"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15761,7 +17110,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15775,6 +17126,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyNetworkInterfaceAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15794,7 +17146,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15808,6 +17162,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyPrivateDnsNameOptions"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15827,7 +17182,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15845,6 +17202,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyReservedInstances"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15864,7 +17222,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15878,6 +17238,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifySecurityGroupRules"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15897,7 +17258,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15915,6 +17278,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifySnapshotAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15934,7 +17298,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15948,6 +17314,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifySnapshotTier"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -15967,7 +17334,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -15991,6 +17360,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifySpotFleetRequest"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16010,7 +17380,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16032,6 +17404,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifySubnetAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16051,7 +17424,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16067,6 +17442,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyTrafficMirrorFilterNetworkServices"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16086,7 +17462,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16102,6 +17480,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyTrafficMirrorFilterRule"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16121,7 +17500,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16135,6 +17516,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyTrafficMirrorSession"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16154,7 +17536,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16168,6 +17552,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyTransitGateway"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16187,7 +17572,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16201,6 +17588,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyTransitGatewayPrefixListReference"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16220,7 +17608,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16234,6 +17624,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyTransitGatewayVpcAttachment"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16253,7 +17644,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16275,6 +17668,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyVolume"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16294,7 +17688,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16312,6 +17708,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyVolumeAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16331,7 +17728,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16345,6 +17744,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyVpcAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16364,7 +17764,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16378,6 +17780,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyVpcEndpoint"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16397,7 +17800,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16411,6 +17816,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyVpcEndpointConnectionNotification"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16430,7 +17836,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16446,6 +17854,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyVpcEndpointServiceConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16465,7 +17874,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16479,6 +17890,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyVpcEndpointServicePayerResponsibility"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16498,7 +17910,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16514,6 +17928,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyVpcEndpointServicePermissions"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16533,7 +17948,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16554,6 +17971,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyVpcPeeringConnectionOptions"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16573,7 +17991,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16591,6 +18011,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyVpcTenancy"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16610,7 +18031,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16644,6 +18067,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyVpnConnection"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16663,7 +18087,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16679,6 +18105,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyVpnConnectionOptions"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16698,7 +18125,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16712,6 +18141,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyVpnTunnelCertificate"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16731,7 +18161,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16745,6 +18177,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ModifyVpnTunnelOptions"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16764,7 +18197,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16780,6 +18215,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "MonitorInstances"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16799,7 +18235,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16815,6 +18253,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "MoveAddressToVpc"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16834,7 +18273,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16850,6 +18291,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "MoveByoipCidrToIpam"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16869,7 +18311,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16887,6 +18331,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ProvisionByoipCidr"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16906,7 +18351,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16922,6 +18369,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ProvisionIpamPoolCidr"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16941,7 +18389,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16957,6 +18407,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ProvisionPublicIpv4PoolCidr"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -16976,7 +18427,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -16990,6 +18443,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PurchaseHostReservation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17009,7 +18463,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17029,6 +18485,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PurchaseReservedInstancesOffering"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17048,7 +18505,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17066,6 +18525,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PurchaseScheduledInstances"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17085,7 +18545,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17103,6 +18565,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RebootInstances"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17122,7 +18585,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17157,6 +18622,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RegisterImage"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17176,7 +18642,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17192,6 +18660,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RegisterInstanceEventNotificationAttributes"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17211,7 +18680,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17227,6 +18698,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RegisterTransitGatewayMulticastGroupMembers"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17246,7 +18718,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17264,6 +18738,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RegisterTransitGatewayMulticastGroupSources"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17283,7 +18758,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17297,6 +18774,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RejectTransitGatewayMulticastDomainAssociations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17316,7 +18794,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17330,6 +18810,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RejectTransitGatewayPeeringAttachment"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17349,7 +18830,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17365,6 +18848,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RejectTransitGatewayVpcAttachment"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17384,7 +18868,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17398,6 +18884,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RejectVpcEndpointConnections"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17417,7 +18904,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17431,6 +18920,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RejectVpcPeeringConnection"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17450,7 +18940,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17476,6 +18968,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ReleaseAddress"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17495,7 +18988,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17513,6 +19008,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ReleaseHosts"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17532,7 +19028,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17546,6 +19044,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ReleaseIpamPoolAllocation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17565,7 +19064,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17581,6 +19082,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ReplaceIamInstanceProfileAssociation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17600,7 +19102,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17616,6 +19120,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ReplaceNetworkAclAssociation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17635,7 +19140,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17649,6 +19156,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ReplaceNetworkAclEntry"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17668,7 +19176,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17686,6 +19196,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ReplaceRoute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17705,7 +19216,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17721,6 +19234,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ReplaceRouteTableAssociation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17740,7 +19254,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17754,6 +19270,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ReplaceTransitGatewayRoute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17773,7 +19290,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17789,6 +19308,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ReportInstanceStatus"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17808,7 +19328,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17836,6 +19358,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RequestSpotFleet"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17855,7 +19378,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17875,6 +19400,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RequestSpotInstances"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17894,7 +19420,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17908,6 +19436,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ResetAddressAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17927,7 +19456,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17943,6 +19474,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ResetEbsDefaultKmsKeyId"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17962,7 +19494,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -17976,6 +19510,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ResetFpgaImageAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -17995,7 +19530,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18009,6 +19546,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ResetImageAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18028,7 +19566,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18044,6 +19584,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ResetInstanceAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18063,7 +19604,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18077,6 +19620,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ResetNetworkInterfaceAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18096,7 +19640,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18112,6 +19658,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ResetSnapshotAttribute"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18131,7 +19678,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18147,6 +19696,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RestoreAddressToClassic"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18166,7 +19716,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18180,6 +19732,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RestoreImageFromRecycleBin"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18199,7 +19752,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18213,6 +19768,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RestoreManagedPrefixListVersion"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18232,7 +19788,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18246,6 +19804,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RestoreSnapshotFromRecycleBin"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18265,7 +19824,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18281,6 +19842,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RestoreSnapshotTier"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18300,7 +19862,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18314,6 +19878,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RevokeClientVpnIngress"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18333,7 +19898,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18355,6 +19922,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RevokeSecurityGroupEgress"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18374,7 +19942,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18398,6 +19968,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RevokeSecurityGroupIngress"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18417,7 +19988,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18452,6 +20025,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RunInstances"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18471,7 +20045,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18489,6 +20065,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RunScheduledInstances"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18508,7 +20085,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18522,6 +20101,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "SearchLocalGatewayRoutes"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18541,7 +20121,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18555,6 +20137,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "SearchTransitGatewayMulticastGroups"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18574,7 +20157,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18588,6 +20173,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "SearchTransitGatewayRoutes"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18607,7 +20193,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18627,6 +20215,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "SendDiagnosticInterrupt"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18646,7 +20235,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18670,6 +20261,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "StartInstances"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18689,7 +20281,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18703,6 +20297,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "StartNetworkInsightsAccessScopeAnalysis"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18722,7 +20317,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18736,6 +20333,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "StartNetworkInsightsAnalysis"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18755,7 +20353,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18773,6 +20373,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "StartVpcEndpointServicePrivateDnsVerification"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18792,7 +20393,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18818,6 +20421,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "StopInstances"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18837,7 +20441,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18851,6 +20457,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "TerminateClientVpnConnections"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18870,7 +20477,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18908,6 +20517,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "TerminateInstances"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18927,7 +20537,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18941,6 +20553,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "UnassignIpv6Addresses"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18960,7 +20573,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -18974,6 +20589,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "UnassignPrivateIpAddresses"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -18993,7 +20609,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -19007,6 +20625,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "UnmonitorInstances"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -19026,7 +20645,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -19040,6 +20661,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "UpdateSecurityGroupRuleDescriptionsEgress"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -19059,7 +20681,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -19073,6 +20697,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "UpdateSecurityGroupRuleDescriptionsIngress"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -19092,7 +20717,9 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -19110,6 +20737,7 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "WithdrawByoipCidr"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -19129,12 +20757,15 @@ internal class DefaultEc2Client(override val config: Ec2Client.Config) : Ec2Clie
                 this.service = "ec2"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     override fun close() {
         client.close()
         (config.credentialsProvider as? Closeable)?.close()
+        rootTraceSpan.close()
     }
 
     /**

@@ -200,6 +200,9 @@ import aws.smithy.kotlin.runtime.http.endpoints.EndpointResolver
 import aws.smithy.kotlin.runtime.http.engine.HttpClientEngine
 import aws.smithy.kotlin.runtime.retries.RetryStrategy
 import aws.smithy.kotlin.runtime.retries.StandardRetryStrategy
+import aws.smithy.kotlin.runtime.tracing.NoOpTraceProbe
+import aws.smithy.kotlin.runtime.tracing.TraceProbe
+import aws.smithy.kotlin.runtime.tracing.TracingClientConfig
 
 /**
  *
@@ -233,7 +236,8 @@ public interface S3Client : SdkClient {
         }
     }
 
-    public class Config private constructor(builder: Builder): HttpClientConfig, SdkClientConfig {
+    public class Config private constructor(builder: Builder): HttpClientConfig, SdkClientConfig, TracingClientConfig {
+        override val clientName: String = builder.clientName ?: "S3"
         public val credentialsProvider: CredentialsProvider = builder.credentialsProvider?.borrow() ?: DefaultChainCredentialsProvider()
         public val endpointResolver: AwsEndpointResolver = builder.endpointResolver ?: DefaultEndpointResolver()
         override val httpClientEngine: HttpClientEngine? = builder.httpClientEngine
@@ -241,11 +245,18 @@ public interface S3Client : SdkClient {
         public val retryStrategy: RetryStrategy = builder.retryStrategy ?: StandardRetryStrategy()
         override val sdkLogMode: SdkLogMode = builder.sdkLogMode
         public val signer: AwsSigner = builder.signer ?: DefaultAwsSigner
+        override val traceProbe: TraceProbe = builder.traceProbe ?: NoOpTraceProbe
         public companion object {
             public inline operator fun invoke(block: Builder.() -> kotlin.Unit): Config = Builder().apply(block).build()
         }
 
         public class Builder {
+            /**
+             * The name of this client, which will be used in tracing data. If using multiple clients for the same
+             * service simultaneously, giving them unique names can help disambiguate them in logging messages or
+             * metrics. By default, the client name will be the same as the service name.
+             */
+            public var clientName: String? = null
             /**
              * The AWS credentials provider to use for authenticating requests. If not provided a
              * [aws.sdk.kotlin.runtime.auth.credentials.DefaultChainCredentialsProvider] instance will be used.
@@ -288,6 +299,11 @@ public interface S3Client : SdkClient {
              * The implementation of AWS signer to use for signing requests
              */
             public var signer: AwsSigner? = null
+            /**
+             * The probe that receives tracing events such as logging messages and metrics. This probe can be used
+             * to send tracing events to other frameworks outside the SDK. By default, a no-op probe is selected.
+             */
+            public var traceProbe: TraceProbe? = null
 
             @PublishedApi
             internal fun build(): Config = Config(this)

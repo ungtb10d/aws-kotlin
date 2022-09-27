@@ -22,8 +22,11 @@ import aws.smithy.kotlin.runtime.http.middleware.MutateHeaders
 import aws.smithy.kotlin.runtime.http.operation.SdkHttpOperation
 import aws.smithy.kotlin.runtime.http.operation.context
 import aws.smithy.kotlin.runtime.http.operation.roundTrip
+import aws.smithy.kotlin.runtime.http.operation.sdkRequestId
 import aws.smithy.kotlin.runtime.http.sdkHttpClient
 import aws.smithy.kotlin.runtime.io.Closeable
+import aws.smithy.kotlin.runtime.tracing.DefaultTracer
+import aws.smithy.kotlin.runtime.tracing.childTraceSpan
 import aws.smithy.kotlin.runtime.util.putIfAbsent
 
 
@@ -33,6 +36,7 @@ public const val SdkVersion: String = "0.17.7-SNAPSHOT"
 
 internal class DefaultStsClient(override val config: StsClient.Config) : StsClient {
     private val client: SdkHttpClient
+    private val rootTraceSpan = DefaultTracer(config.traceProbe, config.clientName).createRootSpan()
     init {
         val httpClientEngine = config.httpClientEngine ?: DefaultHttpEngine()
         client = sdkHttpClient(httpClientEngine, manageEngine = config.httpClientEngine == null)
@@ -86,6 +90,7 @@ internal class DefaultStsClient(override val config: StsClient.Config) : StsClie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AssumeRole"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -105,7 +110,9 @@ internal class DefaultStsClient(override val config: StsClient.Config) : StsClie
                 this.service = "sts"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -161,6 +168,7 @@ internal class DefaultStsClient(override val config: StsClient.Config) : StsClie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AssumeRoleWithSAML"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -173,7 +181,9 @@ internal class DefaultStsClient(override val config: StsClient.Config) : StsClie
         )
         op.install(UserAgent(awsUserAgentMetadata))
         op.install(RecursionDetection())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -231,6 +241,7 @@ internal class DefaultStsClient(override val config: StsClient.Config) : StsClie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "AssumeRoleWithWebIdentity"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -243,7 +254,9 @@ internal class DefaultStsClient(override val config: StsClient.Config) : StsClie
         )
         op.install(UserAgent(awsUserAgentMetadata))
         op.install(RecursionDetection())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -270,6 +283,7 @@ internal class DefaultStsClient(override val config: StsClient.Config) : StsClie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DecodeAuthorizationMessage"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -289,7 +303,9 @@ internal class DefaultStsClient(override val config: StsClient.Config) : StsClie
                 this.service = "sts"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -309,6 +325,7 @@ internal class DefaultStsClient(override val config: StsClient.Config) : StsClie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetAccessKeyInfo"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -328,7 +345,9 @@ internal class DefaultStsClient(override val config: StsClient.Config) : StsClie
                 this.service = "sts"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -344,6 +363,7 @@ internal class DefaultStsClient(override val config: StsClient.Config) : StsClie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetCallerIdentity"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -363,7 +383,9 @@ internal class DefaultStsClient(override val config: StsClient.Config) : StsClie
                 this.service = "sts"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -407,6 +429,7 @@ internal class DefaultStsClient(override val config: StsClient.Config) : StsClie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetFederationToken"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -426,7 +449,9 @@ internal class DefaultStsClient(override val config: StsClient.Config) : StsClie
                 this.service = "sts"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -458,6 +483,7 @@ internal class DefaultStsClient(override val config: StsClient.Config) : StsClie
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetSessionToken"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -477,12 +503,15 @@ internal class DefaultStsClient(override val config: StsClient.Config) : StsClie
                 this.service = "sts"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     override fun close() {
         client.close()
         (config.credentialsProvider as? Closeable)?.close()
+        rootTraceSpan.close()
     }
 
     /**

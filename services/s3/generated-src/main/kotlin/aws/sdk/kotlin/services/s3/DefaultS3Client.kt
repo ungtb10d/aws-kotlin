@@ -24,8 +24,11 @@ import aws.smithy.kotlin.runtime.http.operation.SdkHttpOperation
 import aws.smithy.kotlin.runtime.http.operation.context
 import aws.smithy.kotlin.runtime.http.operation.execute
 import aws.smithy.kotlin.runtime.http.operation.roundTrip
+import aws.smithy.kotlin.runtime.http.operation.sdkRequestId
 import aws.smithy.kotlin.runtime.http.sdkHttpClient
 import aws.smithy.kotlin.runtime.io.Closeable
+import aws.smithy.kotlin.runtime.tracing.DefaultTracer
+import aws.smithy.kotlin.runtime.tracing.childTraceSpan
 import aws.smithy.kotlin.runtime.util.putIfAbsent
 
 
@@ -35,6 +38,7 @@ public const val SdkVersion: String = "0.17.7-SNAPSHOT"
 
 internal class DefaultS3Client(override val config: S3Client.Config) : S3Client {
     private val client: SdkHttpClient
+    private val rootTraceSpan = DefaultTracer(config.traceProbe, config.clientName).createRootSpan()
     init {
         val httpClientEngine = config.httpClientEngine ?: DefaultHttpEngine()
         client = sdkHttpClient(httpClientEngine, manageEngine = config.httpClientEngine == null)
@@ -63,6 +67,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 204
                 service = serviceName
                 operationName = "AbortMultipartUpload"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -80,7 +85,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -127,6 +134,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CompleteMultipartUpload"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -144,7 +152,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -236,6 +246,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CopyObject"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -253,7 +264,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -311,6 +324,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateBucket"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -328,7 +342,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -410,6 +426,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateMultipartUpload"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -427,7 +444,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -445,6 +464,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 204
                 service = serviceName
                 operationName = "DeleteBucket"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -462,7 +482,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -485,6 +507,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 204
                 service = serviceName
                 operationName = "DeleteBucketAnalyticsConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -502,7 +525,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -524,6 +549,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 204
                 service = serviceName
                 operationName = "DeleteBucketCors"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -541,7 +567,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -561,6 +589,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 204
                 service = serviceName
                 operationName = "DeleteBucketEncryption"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -578,7 +607,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -603,6 +634,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 204
                 service = serviceName
                 operationName = "DeleteBucketIntelligentTieringConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -620,7 +652,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -643,6 +677,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 204
                 service = serviceName
                 operationName = "DeleteBucketInventoryConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -660,7 +695,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -684,6 +721,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 204
                 service = serviceName
                 operationName = "DeleteBucketLifecycle"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -701,7 +739,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -725,6 +765,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 204
                 service = serviceName
                 operationName = "DeleteBucketMetricsConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -742,7 +783,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -762,6 +805,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 204
                 service = serviceName
                 operationName = "DeleteBucketOwnershipControls"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -779,7 +823,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -803,6 +849,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 204
                 service = serviceName
                 operationName = "DeleteBucketPolicy"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -820,7 +867,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -844,6 +893,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 204
                 service = serviceName
                 operationName = "DeleteBucketReplication"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -861,7 +911,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -881,6 +933,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 204
                 service = serviceName
                 operationName = "DeleteBucketTagging"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -898,7 +951,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -920,6 +975,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 204
                 service = serviceName
                 operationName = "DeleteBucketWebsite"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -937,7 +993,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -962,6 +1020,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 204
                 service = serviceName
                 operationName = "DeleteObject"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -979,7 +1038,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1001,6 +1062,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 204
                 service = serviceName
                 operationName = "DeleteObjectTagging"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1018,7 +1080,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1047,6 +1111,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteObjects"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1065,7 +1130,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1085,6 +1152,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 204
                 service = serviceName
                 operationName = "DeletePublicAccessBlock"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1102,7 +1170,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1127,6 +1197,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetBucketAccelerateConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1144,7 +1215,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1163,6 +1236,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetBucketAcl"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1180,7 +1254,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1203,6 +1279,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetBucketAnalyticsConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1220,7 +1297,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1242,6 +1321,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetBucketCors"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1259,7 +1339,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1281,6 +1363,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetBucketEncryption"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1298,7 +1381,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1323,6 +1408,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetBucketIntelligentTieringConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1340,7 +1426,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1363,6 +1451,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetBucketInventoryConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1380,7 +1469,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1409,6 +1500,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetBucketLifecycleConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1426,7 +1518,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1448,6 +1542,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetBucketLocation"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1465,7 +1560,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1483,6 +1580,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetBucketLogging"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1500,7 +1598,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1524,6 +1624,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetBucketMetricsConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1541,7 +1642,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1564,6 +1667,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetBucketNotificationConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1581,7 +1685,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1601,6 +1707,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetBucketOwnershipControls"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1618,7 +1725,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1641,6 +1750,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetBucketPolicy"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1658,7 +1768,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1680,6 +1792,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetBucketPolicyStatus"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1697,7 +1810,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1725,6 +1840,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetBucketReplication"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1742,7 +1858,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1759,6 +1877,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetBucketRequestPayment"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1776,7 +1895,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1800,6 +1921,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetBucketTagging"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1817,7 +1939,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1840,6 +1964,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetBucketVersioning"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1857,7 +1982,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1877,6 +2004,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetBucketWebsite"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1894,7 +2022,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1968,6 +2098,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetObject"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1985,7 +2116,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.execute(client, input, block)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.execute(client, input, block)
+        }
     }
 
     /**
@@ -2013,6 +2146,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetObjectAcl"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2030,7 +2164,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2081,6 +2217,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetObjectAttributes"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2098,7 +2235,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2117,6 +2256,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetObjectLegalHold"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2134,7 +2274,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2151,6 +2293,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetObjectLockConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2168,7 +2311,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2187,6 +2332,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetObjectRetention"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2204,7 +2350,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2229,6 +2377,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetObjectTagging"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2246,7 +2395,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2269,6 +2420,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetObjectTorrent"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2286,7 +2438,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.execute(client, input, block)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.execute(client, input, block)
+        }
     }
 
     /**
@@ -2310,6 +2464,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetPublicAccessBlock"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2327,7 +2482,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2347,6 +2504,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "HeadBucket"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2364,7 +2522,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2413,6 +2573,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "HeadObject"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2430,7 +2591,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2455,6 +2618,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListBucketAnalyticsConfigurations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2472,7 +2636,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2497,6 +2663,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListBucketIntelligentTieringConfigurations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2514,7 +2681,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2539,6 +2708,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListBucketInventoryConfigurations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2556,7 +2726,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2581,6 +2753,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListBucketMetricsConfigurations"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2598,7 +2771,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2612,6 +2787,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListBuckets"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2629,7 +2805,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2658,6 +2836,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListMultipartUploads"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2675,7 +2854,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2703,6 +2884,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListObjectVersions"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2720,7 +2902,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2743,6 +2927,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListObjects"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2760,7 +2945,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2787,6 +2974,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListObjectsV2"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2804,7 +2992,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2832,6 +3022,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListParts"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2849,7 +3040,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2881,6 +3074,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutBucketAccelerateConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2898,7 +3092,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -2964,6 +3160,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutBucketAcl"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -2982,7 +3179,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3021,6 +3220,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutBucketAnalyticsConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3038,7 +3238,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3070,6 +3272,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutBucketCors"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3088,7 +3291,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3112,6 +3317,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutBucketEncryption"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3130,7 +3336,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3168,6 +3376,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutBucketIntelligentTieringConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3185,7 +3394,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3223,6 +3434,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutBucketInventoryConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3240,7 +3452,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3281,6 +3495,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutBucketLifecycleConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3299,7 +3514,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3338,6 +3555,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutBucketLogging"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3356,7 +3574,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3384,6 +3604,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutBucketMetricsConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3401,7 +3622,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3442,6 +3665,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutBucketNotificationConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3459,7 +3683,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3479,6 +3705,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutBucketOwnershipControls"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3497,7 +3724,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3521,6 +3750,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutBucketPolicy"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3539,7 +3769,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3581,6 +3813,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutBucketReplication"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3599,7 +3832,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3617,6 +3852,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutBucketRequestPayment"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3635,7 +3871,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3669,6 +3907,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutBucketTagging"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3687,7 +3926,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3718,6 +3959,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutBucketVersioning"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3736,7 +3978,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3778,6 +4022,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutBucketWebsite"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3796,7 +4041,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3849,6 +4096,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutObject"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3866,7 +4114,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3931,6 +4181,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutObjectAcl"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3949,7 +4200,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -3965,6 +4218,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutObjectLegalHold"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -3983,7 +4237,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4001,6 +4257,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutObjectLockConfiguration"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4019,7 +4276,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4035,6 +4294,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutObjectRetention"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4053,7 +4313,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4095,6 +4357,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutObjectTagging"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4113,7 +4376,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4137,6 +4402,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutPublicAccessBlock"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4155,7 +4421,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
             }
         )
         op.install(Md5Checksum())
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4246,6 +4514,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RestoreObject"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4263,7 +4532,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4314,6 +4585,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "SelectObjectContent"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4331,7 +4603,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.execute(client, input, block)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.execute(client, input, block)
+        }
     }
 
     /**
@@ -4386,6 +4660,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "UploadPart"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4403,7 +4678,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4460,6 +4737,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "UploadPartCopy"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -4477,7 +4755,9 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -4505,6 +4785,7 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "WriteGetObjectResponse"
+                traceSpan = rootTraceSpan
                 hostPrefix = "${input.requestRoute}."
             }
         }
@@ -4524,12 +4805,15 @@ internal class DefaultS3Client(override val config: S3Client.Config) : S3Client 
                 normalizeUriPath = false
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     override fun close() {
         client.close()
         (config.credentialsProvider as? Closeable)?.close()
+        rootTraceSpan.close()
     }
 
     /**

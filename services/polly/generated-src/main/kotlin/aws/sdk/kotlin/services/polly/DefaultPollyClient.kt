@@ -22,8 +22,11 @@ import aws.smithy.kotlin.runtime.http.operation.SdkHttpOperation
 import aws.smithy.kotlin.runtime.http.operation.context
 import aws.smithy.kotlin.runtime.http.operation.execute
 import aws.smithy.kotlin.runtime.http.operation.roundTrip
+import aws.smithy.kotlin.runtime.http.operation.sdkRequestId
 import aws.smithy.kotlin.runtime.http.sdkHttpClient
 import aws.smithy.kotlin.runtime.io.Closeable
+import aws.smithy.kotlin.runtime.tracing.DefaultTracer
+import aws.smithy.kotlin.runtime.tracing.childTraceSpan
 import aws.smithy.kotlin.runtime.util.putIfAbsent
 
 
@@ -33,6 +36,7 @@ public const val SdkVersion: String = "0.17.7-SNAPSHOT"
 
 internal class DefaultPollyClient(override val config: PollyClient.Config) : PollyClient {
     private val client: SdkHttpClient
+    private val rootTraceSpan = DefaultTracer(config.traceProbe, config.clientName).createRootSpan()
     init {
         val httpClientEngine = config.httpClientEngine ?: DefaultHttpEngine()
         client = sdkHttpClient(httpClientEngine, manageEngine = config.httpClientEngine == null)
@@ -52,6 +56,7 @@ internal class DefaultPollyClient(override val config: PollyClient.Config) : Pol
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteLexicon"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -66,7 +71,9 @@ internal class DefaultPollyClient(override val config: PollyClient.Config) : Pol
                 this.service = "polly"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -88,6 +95,7 @@ internal class DefaultPollyClient(override val config: PollyClient.Config) : Pol
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeVoices"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -102,7 +110,9 @@ internal class DefaultPollyClient(override val config: PollyClient.Config) : Pol
                 this.service = "polly"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -116,6 +126,7 @@ internal class DefaultPollyClient(override val config: PollyClient.Config) : Pol
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetLexicon"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -130,7 +141,9 @@ internal class DefaultPollyClient(override val config: PollyClient.Config) : Pol
                 this.service = "polly"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -144,6 +157,7 @@ internal class DefaultPollyClient(override val config: PollyClient.Config) : Pol
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetSpeechSynthesisTask"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -158,7 +172,9 @@ internal class DefaultPollyClient(override val config: PollyClient.Config) : Pol
                 this.service = "polly"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -172,6 +188,7 @@ internal class DefaultPollyClient(override val config: PollyClient.Config) : Pol
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListLexicons"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -186,7 +203,9 @@ internal class DefaultPollyClient(override val config: PollyClient.Config) : Pol
                 this.service = "polly"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -200,6 +219,7 @@ internal class DefaultPollyClient(override val config: PollyClient.Config) : Pol
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListSpeechSynthesisTasks"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -214,7 +234,9 @@ internal class DefaultPollyClient(override val config: PollyClient.Config) : Pol
                 this.service = "polly"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -230,6 +252,7 @@ internal class DefaultPollyClient(override val config: PollyClient.Config) : Pol
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutLexicon"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -244,7 +267,9 @@ internal class DefaultPollyClient(override val config: PollyClient.Config) : Pol
                 this.service = "polly"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -258,6 +283,7 @@ internal class DefaultPollyClient(override val config: PollyClient.Config) : Pol
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "StartSpeechSynthesisTask"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -272,7 +298,9 @@ internal class DefaultPollyClient(override val config: PollyClient.Config) : Pol
                 this.service = "polly"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -286,6 +314,7 @@ internal class DefaultPollyClient(override val config: PollyClient.Config) : Pol
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "SynthesizeSpeech"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -300,12 +329,15 @@ internal class DefaultPollyClient(override val config: PollyClient.Config) : Pol
                 this.service = "polly"
             }
         )
-        return op.execute(client, input, block)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.execute(client, input, block)
+        }
     }
 
     override fun close() {
         client.close()
         (config.credentialsProvider as? Closeable)?.close()
+        rootTraceSpan.close()
     }
 
     /**

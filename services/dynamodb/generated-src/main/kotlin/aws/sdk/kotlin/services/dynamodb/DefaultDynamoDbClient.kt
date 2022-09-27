@@ -23,8 +23,11 @@ import aws.smithy.kotlin.runtime.http.engine.DefaultHttpEngine
 import aws.smithy.kotlin.runtime.http.operation.SdkHttpOperation
 import aws.smithy.kotlin.runtime.http.operation.context
 import aws.smithy.kotlin.runtime.http.operation.roundTrip
+import aws.smithy.kotlin.runtime.http.operation.sdkRequestId
 import aws.smithy.kotlin.runtime.http.sdkHttpClient
 import aws.smithy.kotlin.runtime.io.Closeable
+import aws.smithy.kotlin.runtime.tracing.DefaultTracer
+import aws.smithy.kotlin.runtime.tracing.childTraceSpan
 import aws.smithy.kotlin.runtime.util.putIfAbsent
 
 
@@ -34,6 +37,7 @@ public const val SdkVersion: String = "0.17.7-SNAPSHOT"
 
 internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config) : DynamoDbClient {
     private val client: SdkHttpClient
+    private val rootTraceSpan = DefaultTracer(config.traceProbe, config.clientName).createRootSpan()
     init {
         val httpClientEngine = config.httpClientEngine ?: DefaultHttpEngine()
         client = sdkHttpClient(httpClientEngine, manageEngine = config.httpClientEngine == null)
@@ -55,6 +59,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "BatchExecuteStatement"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -70,7 +75,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -104,6 +111,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "BatchGetItem"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -119,7 +127,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -158,6 +168,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "BatchWriteItem"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -173,7 +184,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -203,6 +216,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateBackup"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -218,7 +232,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -252,6 +268,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateGlobalTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -267,7 +284,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -287,6 +306,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "CreateTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -302,7 +322,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -318,6 +340,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteBackup"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -333,7 +356,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -353,6 +378,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteItem"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -368,7 +394,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -390,6 +418,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DeleteTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -405,7 +434,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -421,6 +452,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeBackup"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -436,7 +468,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -456,6 +490,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeContinuousBackups"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -471,7 +506,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -485,6 +522,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeContributorInsights"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -500,7 +538,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -514,6 +554,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeEndpoints"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -529,7 +570,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -543,6 +586,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeExport"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -558,7 +602,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -574,6 +620,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeGlobalTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -589,7 +636,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -605,6 +654,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeGlobalTableSettings"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -620,7 +670,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -634,6 +686,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeImport"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -649,7 +702,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -663,6 +718,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeKinesisStreamingDestination"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -678,7 +734,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -716,6 +774,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeLimits"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -731,7 +790,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -747,6 +808,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -762,7 +824,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -778,6 +842,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeTableReplicaAutoScaling"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -793,7 +858,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -807,6 +874,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DescribeTimeToLive"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -822,7 +890,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -836,6 +906,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "DisableKinesisStreamingDestination"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -851,7 +922,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -865,6 +938,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "EnableKinesisStreamingDestination"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -880,7 +954,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -898,6 +974,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ExecuteStatement"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -913,7 +990,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -929,6 +1008,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ExecuteTransaction"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -944,7 +1024,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -958,6 +1040,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ExportTableToPointInTime"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -973,7 +1056,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -989,6 +1074,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "GetItem"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1004,7 +1090,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1018,6 +1106,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ImportTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1033,7 +1122,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1051,6 +1142,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListBackups"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1066,7 +1158,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1080,6 +1174,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListContributorInsights"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1095,7 +1190,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1109,6 +1206,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListExports"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1124,7 +1222,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1140,6 +1240,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListGlobalTables"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1155,7 +1256,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1169,6 +1272,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListImports"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1184,7 +1288,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1198,6 +1304,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListTables"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1213,7 +1320,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1229,6 +1338,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "ListTagsOfResource"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1244,7 +1354,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1268,6 +1380,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "PutItem"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1283,7 +1396,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1313,6 +1428,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "Query"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1328,7 +1444,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1352,6 +1470,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RestoreTableFromBackup"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1367,7 +1486,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1398,6 +1519,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "RestoreTableToPointInTime"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1413,7 +1535,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1435,6 +1559,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "Scan"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1450,7 +1575,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1466,6 +1593,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "TagResource"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1481,7 +1609,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1501,6 +1631,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "TransactGetItems"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1516,7 +1647,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1544,6 +1677,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "TransactWriteItems"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1559,7 +1693,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1575,6 +1711,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "UntagResource"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1590,7 +1727,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1608,6 +1747,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "UpdateContinuousBackups"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1623,7 +1763,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1637,6 +1779,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "UpdateContributorInsights"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1652,7 +1795,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1673,6 +1818,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "UpdateGlobalTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1688,7 +1834,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1702,6 +1850,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "UpdateGlobalTableSettings"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1717,7 +1866,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1733,6 +1884,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "UpdateItem"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1748,7 +1900,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1769,6 +1923,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "UpdateTable"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1784,7 +1939,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1800,6 +1957,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "UpdateTableReplicaAutoScaling"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1815,7 +1973,9 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     /**
@@ -1841,6 +2001,7 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 expectedHttpStatus = 200
                 service = serviceName
                 operationName = "UpdateTimeToLive"
+                traceSpan = rootTraceSpan
             }
         }
         mergeServiceDefaults(op.context)
@@ -1856,12 +2017,15 @@ internal class DefaultDynamoDbClient(override val config: DynamoDbClient.Config)
                 this.service = "dynamodb"
             }
         )
-        return op.roundTrip(client, input)
+        return op.context.childTraceSpan(op.context.sdkRequestId) {
+            op.roundTrip(client, input)
+        }
     }
 
     override fun close() {
         client.close()
         (config.credentialsProvider as? Closeable)?.close()
+        rootTraceSpan.close()
     }
 
     /**
